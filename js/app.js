@@ -1,32 +1,41 @@
-const toggleBtn = document.querySelector(".btn");
+const darkModeSun = document.querySelector(".fa-sun");
+const darkModeMoon = document.querySelector(".fa-moon");
 const docBody = document.documentElement;
 const darkModeFeature = localStorage.getItem("isDarkMode");
-
-// Dark Mode Feature
 if (darkModeFeature === "enabled") {
-  darkModeOn(); // Initial State of Dark Mode
+  darkModeOn();
 }
-// Mouseover checks theme status & if darkmode in localStorage
-toggleBtn.addEventListener("mouseover", () => {
+darkModeSun.addEventListener("mouseover", () => {
+  console.log("MOuse");
   if (darkModeFeature == null || darkModeFeature === "disabled") {
     localStorage.setItem("isDarkMode", "disabled");
   }
 });
-toggleBtn.addEventListener("click", () => {
-  if (localStorage.getItem("isDarkMode") === "disabled") {
+darkModeSun.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("hide")) {
+    e.target.classList.add("hide");
+    darkModeMoon.classList.remove("hide");
+    darkModeMoon.classList.add("night-mode");
     darkModeOn();
-  } else {
+  }
+});
+darkModeMoon.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("hide")) {
+    e.target.classList.add("hide");
+    darkModeSun.classList.remove("hide");
     darkModeOff();
   }
 });
-// ***** Functions *****
 function darkModeOn() {
   docBody.classList.add("dark-mode");
-  toggleBtn.classList.add("dark-btn");
+  darkModeSun.classList.add("hide");
+  darkModeMoon.classList.remove("hide");
+  darkModeMoon.classList.add("night-mode");
   localStorage.setItem("isDarkMode", "enabled");
 }
 function darkModeOff() {
   docBody.classList.remove("dark-mode");
-  toggleBtn.classList.remove("dark-btn");
+  darkModeSun.classList.remove("hide");
+  darkModeMoon.classList.add("hide");
   localStorage.setItem("isDarkMode", "disabled");
 }
